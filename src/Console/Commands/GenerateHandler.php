@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Nicolasalexandre9\HandlerGenerator\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\View;
