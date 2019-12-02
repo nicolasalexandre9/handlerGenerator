@@ -14,13 +14,13 @@
     },
     "autoload": {
         "psr-4": {
-            "nicolasalexandre9\\handlerGenerator\\": "src"
+            "Nicolasalexandre9\\HandlerGenerator\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "nicolasalexandre9\\Handler-generator\\HandlerGeneratorProvider"
+                "Nicolasalexandre9\\HandlerGenerator\\HandlerGeneratorProvider"
             ]
         }
     },
