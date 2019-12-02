@@ -20,7 +20,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "nicolasalexandre9\\HandlerGenerator\\HandlerGeneratorProvider"
+                "nicolasalexandre9\\Handler-generator\\HandlerGeneratorProvider"
             ]
         }
     },
