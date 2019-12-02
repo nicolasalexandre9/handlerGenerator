@@ -20,7 +20,8 @@
     "extra": {
         "laravel": {
             "providers": [
-            ]
+                "nicolasalexandre9\\HandlerGenerator\\HandlerGeneratorProvider"
+            ],
         }
     },
     "minimum-stability": "dev",
