@@ -9,9 +9,13 @@ use App\Http\Handlers\Interfaces\{{ucFirst($name)}}HandlerInterface;
 class {{ucFirst($name)}}Handler extends AbstractHandler implements {{ucFirst($name)}}HandlerInterface
 {
 
-    public function handle(?array $parameters = null)
+    /**
+     * @param array $parameters
+     *
+     * @return array
+     */
+    public function handle(array $parameters = []): array
     {
         //ToDo
     }
-
 }
