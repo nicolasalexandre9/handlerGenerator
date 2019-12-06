@@ -17,7 +17,7 @@ trait FileHandler
     {
         $controllerPath = 'app/Http/Controllers/'.$path;
         $filename = $controllerPath.ucfirst($name).'Controller.php';
-        $controller = View::make('handlerGenerator::controller')->with(compact('name'))->render();
+        $controller = View::make('handlerGenerator::controller')->with(compact('name', 'path'))->render();
         return !file_exists($filename) ? (bool)file_put_contents($filename, $controller) : true;
     }
 
@@ -62,13 +62,30 @@ trait FileHandler
     public function makeModel(string $name): bool
     {
         $directory = 'app/Models';
-        $filename = 'app/Models/';
+        $filename = 'app/Models/'.ucfirst($name).'.php';
         if (!is_dir($directory) && !mkdir($directory) && !is_dir($directory)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
         }
         $model = View::make('handlerGenerator::model')->with(compact('name'))->render();
         return !file_exists($filename) ? (bool)file_put_contents($filename, $model) : true;
 
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function updatePatternConfig(string $name): bool
+    {
+        $pattern = config('pattern');
+        $filename = config_path(). '/pattern.php';
+        if (isset($pattern) && file_exists($filename)) {
+            $pattern['App\\Http\\Handlers\\Interfaces\\'.ucfirst($name).'HandlerInterface'] = 'App\\Http\\Handlers\\Core\\'.ucfirst($name).'Handler';
+            return (bool)file_put_contents($filename, '<?php return ' . var_export($pattern, true) . ';');
+        } else {
+            return false;
+        }
     }
 
 }

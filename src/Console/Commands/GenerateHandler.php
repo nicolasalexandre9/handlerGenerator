@@ -45,20 +45,25 @@ class GenerateHandler extends Command
 
         //Controller
         if (!$this->makeController($name, $this->argument('controllerPath')))
-            $this->error('Error, controller was not created');
+            return $this->error('Error, controller was not created');
 
         //HandlerInterface
         if (!$this->makeInterface($name))
-            $this->error('Error, interface was not created');
+            return $this->error('Error, interface was not created');
 
         //HandlerCore
         if (!$this->makeHandler($name))
-            $this->error('Error, handler was not created');
+            return $this->error('Error, handler was not created');
 
         //Model
         if (!$this->makeModel($name))
-            $this->error('Error, model was not created');
+            return $this->error('Error, model was not created');
 
+        if (!$this->updatePatternConfig($name))
+            return $this->error('Error, pattern config was not updated');
+
+
+        return $this->info('Handler interface created');
     }
 
 
