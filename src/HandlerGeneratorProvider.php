@@ -2,8 +2,9 @@
 
 namespace Nicolasalexandre9\HandlerGenerator;
 
+use function Couchbase\defaultDecoder;
 use Illuminate\Support\ServiceProvider;
-use Nicolasalexandre9\HandlerGenerator\Commands\GenerateHandler;
+use Nicolasalexandre9\HandlerGenerator\Console\Commands\GenerateHandler;
 
 /**
  * Class HandlerGeneratorProvider
@@ -33,6 +34,8 @@ class HandlerGeneratorProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'handlerGenerator');
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 GenerateHandler::class

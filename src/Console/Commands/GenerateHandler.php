@@ -1,9 +1,10 @@
 <?php
 
-namespace Nicolasalexandre9\HandlerGenerator\Commands;
+namespace Nicolasalexandre9\HandlerGenerator\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\View;
+use Nicolasalexandre9\HandlerGenerator\Traits\FileHandler;
+
 
 class GenerateHandler extends Command
 {
@@ -12,7 +13,7 @@ class GenerateHandler extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:handler {name}';
+    protected $signature = 'generate:handler {name} {controllerPath?}';
 
     /**
      * The console command description.
@@ -31,6 +32,8 @@ class GenerateHandler extends Command
         parent::__construct();
     }
 
+    use FileHandler;
+
     /**
      * Execute the console command.
      *
@@ -38,32 +41,29 @@ class GenerateHandler extends Command
      */
     public function handle()
     {
-      $name = $this->argument('name');
-      //Controller
-      $controller = View::make('controller')->with(compact('name'))->render();
-      $res = file_put_contents('app/Http/Controllers/'.ucfirst($name).'Controller.php', $controller);
+        $name = $this->argument('name');
 
-      //HandlerInterface
-        if (!file_exists('app/Http/Handlers/Interfaces')) {
-            mkdir('app/Http/Handlers/Interfaces', 0755, true);
-        }
-      $handlerInterface = View::make('handlerInterface')->with(compact('name'))->render();
-      file_put_contents('app/Http/Handlers/Interfaces/'.ucfirst($name).'HandlerInterface.php', $handlerInterface);
+        //Controller
+        if (!$this->makeController($name, $this->argument('controllerPath')))
+            return $this->error('Error, controller was not created');
 
-      //HandlerCore
-        if (!file_exists('app/Http/Handlers/Core')) {
-            mkdir('app/Http/Handlers/Core', 0755, true);
-        }
-        $handler = View::make('handler')->with(compact('name'))->render();
-      file_put_contents('app/Http/Handlers/Core/'.ucfirst($name).'Handler.php', $handler);
+        //HandlerInterface
+        if (!$this->makeInterface($name))
+            return $this->error('Error, interface was not created');
 
-      //Model
-        if (!file_exists('app/Models')) {
-            mkdir('app/Models', 0755, true);
-        }
-      $model = View::make('model')->with(compact('name'))->render();
-      file_put_contents('app/Models/'.ucfirst($name).'.php', $model);
+        //HandlerCore
+        if (!$this->makeHandler($name))
+            return $this->error('Error, handler was not created');
 
+        //Model
+        if (!$this->makeModel($name))
+            return $this->error('Error, model was not created');
+
+        if (!$this->updatePatternConfig($name))
+            return $this->error('Error, pattern config was not updated');
+
+
+        return $this->info('Handler interface created');
     }
 
 

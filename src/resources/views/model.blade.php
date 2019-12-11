@@ -1,14 +1,14 @@
 <?php echo '<?php ' ?>
 
-Namespace App\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class {{ucFirst($name)}} extends Model
 {
 
-protected $fillable = [
-    //
-];
+    protected $fillable = [
+        //
+    ];
 
 }
