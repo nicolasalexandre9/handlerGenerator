@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\View;
 
 trait FileHandler
 {
-
     /**
      * @param string      $name
      * @param string|null $path
@@ -51,7 +50,6 @@ trait FileHandler
         }
         $handler = View::make('handlerGenerator::handler')->with(compact('name'))->render();
         return !file_exists($filename) ? (bool)file_put_contents($filename, $handler) : true;
-
     }
 
     /**
@@ -68,7 +66,38 @@ trait FileHandler
         }
         $model = View::make('handlerGenerator::model')->with(compact('name'))->render();
         return !file_exists($filename) ? (bool)file_put_contents($filename, $model) : true;
+    }
 
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function makeTransformer(string $name): bool
+    {
+        $directory = 'app/Transformers';
+        $filename = 'app/Transformers/'.ucfirst($name).'Transformer.php';
+        if (!is_dir($directory) && !mkdir($directory) && !is_dir($directory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
+        }
+        $transformer = View::make('handlerGenerator::transformer')->with(compact('name'))->render();
+        return !file_exists($filename) ? (bool)file_put_contents($filename, $transformer) : true;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function makeRequest(string $name): bool
+    {
+        $directory = 'app/Http/Requests';
+        $filename = 'app/Http/Requests/'.ucfirst($name).'Request.php';
+        if (!is_dir($directory) && !mkdir($directory) && !is_dir($directory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
+        }
+        $request = View::make('handlerGenerator::request')->with(compact('name'))->render();
+        return !file_exists($filename) ? (bool)file_put_contents($filename, $request) : true;
     }
 
     /**
