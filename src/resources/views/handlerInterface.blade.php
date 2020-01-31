@@ -1,4 +1,4 @@
-<?php echo '<?php ' ?>
+<?php echo '<?php' ?>
 
 namespace App\Http\Handlers\Interfaces;
 

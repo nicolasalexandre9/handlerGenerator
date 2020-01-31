@@ -59,6 +59,14 @@ class GenerateHandler extends Command
         if (!$this->makeModel($name))
             return $this->error('Error, model was not created');
 
+        //Request
+        if (!$this->makeRequest($name))
+            return $this->error('Error, request was not created');
+
+        //Transformer
+        if (!$this->makeTransformer($name))
+            return $this->error('Error, transformer was not created');
+
         if (!$this->updatePatternConfig($name))
             return $this->error('Error, pattern config was not updated');
 

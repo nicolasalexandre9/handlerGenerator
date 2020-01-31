@@ -1,4 +1,4 @@
-<?php echo '<?php ' ?>
+<?php echo '<?php' ?>
 
 namespace App\Http\Handlers\Core;
 
@@ -11,8 +11,6 @@ class {{ucFirst($name)}}Handler extends AbstractHandler implements {{ucFirst($na
 {
 
     /**
-     * TestHandler constructor.
-     *
      * @param Request $request
      *
      * @throws \ReflectionException
