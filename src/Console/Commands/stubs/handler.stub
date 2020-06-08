@@ -1,15 +1,14 @@
-<?php echo '<?php' ?>
+<?php
 
-namespace App\Http\Handlers\Core;
+namespace DummyNamespace;
 
 use App\Http\Handlers\AbstractHandler;
-use App\Http\Handlers\Interfaces\{{ucFirst($name)}}HandlerInterface;
 use Illuminate\Http\Request;
-use App\Models\{{ ucfirst($name) }};
+use App\Models\DummyModel;
+use App\Http\Handlers\Interfaces\DummyInterface;
 
-class {{ucFirst($name)}}Handler extends AbstractHandler implements {{ucFirst($name)}}HandlerInterface
+class DummyClass extends AbstractHandler implements DummyInterface
 {
-
     /**
      * @param Request $request
      *
@@ -17,7 +16,7 @@ class {{ucFirst($name)}}Handler extends AbstractHandler implements {{ucFirst($na
      */
     public function __construct(Request $request)
     {
-        parent::__construct($request, {{ ucfirst($name) }}::class);
+        parent::__construct($request, DummyModel::class);
     }
 
     /**
@@ -29,4 +28,5 @@ class {{ucFirst($name)}}Handler extends AbstractHandler implements {{ucFirst($na
     {
         //ToDo
     }
+
 }

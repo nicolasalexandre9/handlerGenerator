@@ -5,7 +5,15 @@ namespace Nicolasalexandre9\HandlerGenerator\Console\Commands;
 use Illuminate\Console\Command;
 use Nicolasalexandre9\HandlerGenerator\Traits\FileHandler;
 
-
+/**
+ * Class GenerateHandler
+ *
+ * @category HandlerGenerator
+ * @package  HandlerGenerator
+ * @author   nicolas <nicolas.alexandre@creatic-agency.fr>
+ * @license  GNU http://www.creatic-agency.fr/license
+ * @link     http://www.creatic-agency.fr
+ */
 class GenerateHandler extends Command
 {
     /**
@@ -13,7 +21,7 @@ class GenerateHandler extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:handler {name} {controllerPath?}';
+    protected $signature = 'generate:handler {name} {entities?*}';
 
     /**
      * The console command description.
@@ -41,31 +49,51 @@ class GenerateHandler extends Command
      */
     public function handle()
     {
-        $name = $this->argument('name');
+        $name = ucfirst($this->argument('name'));
+        $childEntities = $this->argument('entities');
 
         //Controller
-        if (!$this->makeController($name, $this->argument('controllerPath')))
-            return $this->error('Error, controller was not created');
+        if (empty($childEntities)) {
+            $this->call('make:controllerHandler', [
+                'name' => $name,
+            ]);
+        } else {
+            $this->call('make:controllerHandler', [
+                'name' => $name,
+                '--type' => 'abstract'
+            ]);
+            foreach ($childEntities as $entity) {
+                $this->call('make:controllerHandler', [
+                    'name' => $name,
+                    '--child' => $entity
+                ]);
+            }
+        }
 
         //HandlerInterface
-        if (!$this->makeInterface($name))
-            return $this->error('Error, interface was not created');
+        $this->call('make:handlerInterface', [
+            'name' => $name,
+        ]);
 
         //HandlerCore
-        if (!$this->makeHandler($name))
-            return $this->error('Error, handler was not created');
+        $this->call('make:handler', [
+            'name' => $name,
+        ]);
 
         //Model
-        if (!$this->makeModel($name))
-            return $this->error('Error, model was not created');
+        $this->call('make:model', [
+            'name' => $name,
+        ]);
 
         //Request
-        if (!$this->makeRequest($name))
-            return $this->error('Error, request was not created');
+        $this->call('make:request', [
+            'name' => $name . 'Request',
+        ]);
 
         //Transformer
-        if (!$this->makeTransformer($name))
-            return $this->error('Error, transformer was not created');
+        $this->call('make:transformer', [
+            'name' => $name,
+        ]);
 
         if (!$this->updatePatternConfig($name))
             return $this->error('Error, pattern config was not updated');
@@ -73,12 +101,4 @@ class GenerateHandler extends Command
 
         return $this->info('Handler interface created');
     }
-
-
-
-
-
-
-
-
 }
