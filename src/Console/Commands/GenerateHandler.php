@@ -82,7 +82,7 @@ class GenerateHandler extends Command
 
         //Model
         $this->call('make:model', [
-            'name' => $name,
+            'name' => 'Models\\'.$name,
         ]);
 
         //Request

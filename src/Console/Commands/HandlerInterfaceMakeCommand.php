@@ -54,6 +54,28 @@ class HandlerInterfaceMakeCommand extends GeneratorCommand
     }
 
     /**
+     * Parse the class name and format according to the root namespace.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    protected function qualifyClass($name)
+    {
+        $name = ltrim($name, '\\/').'HandlerInterface';
+
+        $rootNamespace = $this->rootNamespace();
+
+        if (Str::startsWith($name, $rootNamespace)) {
+            return $name;
+        }
+
+        $name = str_replace('/', '\\', $name);
+
+        return $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name;
+    }
+
+
+    /**
      * Get the stub file for the generator.
      *
      * @return string
