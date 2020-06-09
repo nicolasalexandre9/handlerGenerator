@@ -89,19 +89,6 @@ class HandlerMakeCommand extends GeneratorCommand
         return $name.'HandlerInterface';
     }
 
-//    /**
-//     * Replace the class name for the given stub.
-//     *
-//     * @param  string  $stub
-//     * @param  string  $name
-//     * @return string
-//     */
-//    protected function replaceClass($stub, $name)
-//    {
-//        $class = $this->getClassName($name);
-//        return str_replace('DummyClass', $class, $stub);
-//    }
-
     /**
      * Get the default namespace for the class.
      *
