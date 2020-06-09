@@ -2,6 +2,10 @@
 
 namespace Nicolasalexandre9\HandlerGenerator;
 
+use Nicolasalexandre9\HandlerGenerator\Console\Commands\ControllerHandlerMakeCommand;
+use Nicolasalexandre9\HandlerGenerator\Console\Commands\HandlerInterfaceMakeCommand;
+use Nicolasalexandre9\HandlerGenerator\Console\Commands\HandlerMakeCommand;
+use Nicolasalexandre9\HandlerGenerator\Console\Commands\TransformerMakeCommand;
 use function Couchbase\defaultDecoder;
 use Illuminate\Support\ServiceProvider;
 use Nicolasalexandre9\HandlerGenerator\Console\Commands\GenerateHandler;
@@ -38,7 +42,11 @@ class HandlerGeneratorProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                GenerateHandler::class
+                GenerateHandler::class,
+                HandlerInterfaceMakeCommand::class,
+                HandlerMakeCommand::class,
+                TransformerMakeCommand::class,
+                ControllerHandlerMakeCommand::class
             ]);
         }
     }
