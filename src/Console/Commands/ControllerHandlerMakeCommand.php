@@ -96,7 +96,7 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
     protected function getPath($name)
     {
         $name = Str::plural($this->getNameInput()) . 'Controller';
-        $abstract = $this->option('type') ? 'Abstract ' :  '';
+        $abstract = $this->option('type') ? 'Abstract' :  '';
         $child = $this->option('child') ?: '';
         if (empty($abstract)) {
             $name = '\Http\Controllers\Api\\' . strtoupper(env('API_VERSION')) . '\\' . $child . '\\' . $name;

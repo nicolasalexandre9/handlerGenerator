@@ -31,6 +31,7 @@ trait FileHandler
         $filename = config_path(). '/pattern.php';
         if (isset($pattern) && file_exists($filename)) {
             $pattern["App\\Http\\Handlers\\Interfaces\\".ucfirst($name).'HandlerInterface'] = 'App\\Http\\Handlers\\Core\\'.ucfirst($name).'Handler';
+            ksort($pattern);
             //Add ::class for all className
             foreach ($pattern as $key => $value) {
                 $pattern[$key . '::class'] = $value . '::class';
