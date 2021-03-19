@@ -43,24 +43,24 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
-    protected function buildClass($name)
+    protected function buildClass(string $name): string
     {
         $rawName = $this->getNameInput();
         return str_replace(
             [
                 'DummyModel',
-                'DummyModelInterface',
+                'DummyModelHandlerInterface',
                 'DummyType',
-                'dummyModel'
+                'dummyModel',
             ],
             [
                 $rawName,
                 $this->getInterfaceName($rawName),
-                $this->option('type') ? 'abstract ' :  '',
-                strtolower($rawName)
+                $this->option('type') ? 'abstract ' : '',
+                strtolower($rawName),
             ],
             parent::buildClass($name)
         );
@@ -69,12 +69,12 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
     /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
-    protected function qualifyClass($name)
+    protected function qualifyClass(string $name): string
     {
-        $name = ltrim(Str::plural($name), '\\/').'Controller';
+        $name = ltrim(Str::plural($name), '\\/') . 'Controller';
 
         $rootNamespace = $this->rootNamespace();
 
@@ -84,26 +84,26 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
 
         $name = str_replace('/', '\\', $name);
 
-        return $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name;
+        return $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name;
     }
 
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
-    protected function getPath($name)
+    protected function getPath(string $name): string
     {
         $name = Str::plural($this->getNameInput()) . 'Controller';
-        $abstract = $this->option('type') ? 'Abstract' :  '';
+        $abstract = $this->option('type') ? 'Abstract' : '';
         $child = $this->option('child') ?: '';
         if (empty($abstract)) {
             $name = '\Http\Controllers\Api\\' . strtoupper(env('API_VERSION')) . '\\' . $child . '\\' . $name;
         } else {
             $name = '\Http\Controllers\Api\\' . strtoupper(env('API_VERSION')) . '\\' . $abstract . $name;
         }
-        return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'.php';
+        return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . '.php';
     }
 
     /**
@@ -111,12 +111,16 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
-        return __DIR__.'/stubs/controller.stub';
+        return __DIR__ . '/stubs/controller.stub';
     }
 
-    protected function getInterfaceName($name)
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected function getInterfaceName(string $name): string
     {
         return 'App\Http\Handlers\Interfaces\\' . $name . 'HandlerInterface';
     }
@@ -124,13 +128,13 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace(string $rootNamespace): string
     {
-        $namespace = $rootNamespace.'\Http\Controllers\Api\\' . strtoupper(env('API_VERSION'));
-        return  $this->option('child') ? $namespace . '\\' . $this->option('child') : $namespace;
+        $namespace = $rootNamespace . '\Http\Controllers\Api\\' . strtoupper(env('API_VERSION'));
+        return $this->option('child') ? $namespace . '\\' . $this->option('child') : $namespace;
     }
 
     /**
@@ -138,7 +142,7 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['type', 't', InputOption::VALUE_OPTIONAL, 'create abstract Controller'],

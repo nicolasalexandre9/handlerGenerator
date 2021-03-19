@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use DummyHandlerInterface;
+use DummyModelHandlerInterface;
 use Illuminate\Http\JsonResponse;
 
 DummyTypeclass DummyClass extends ApiController
