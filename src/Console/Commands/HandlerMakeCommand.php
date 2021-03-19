@@ -34,10 +34,10 @@ class HandlerMakeCommand extends GeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
-    protected function buildClass($name)
+    protected function buildClass(string $name): string
     {
         $rawName = $this->getNameInput();
         return str_replace(
@@ -56,10 +56,10 @@ class HandlerMakeCommand extends GeneratorCommand
     /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
-    protected function qualifyClass($name)
+    protected function qualifyClass(string $name): string
     {
         $name = ltrim($name, '\\/').'Handler';
 
@@ -79,12 +79,16 @@ class HandlerMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__.'/stubs/handler.stub';
     }
 
-    protected function getInterfaceName($name)
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected function getInterfaceName(string $name): string
     {
         return $name.'HandlerInterface';
     }
@@ -92,10 +96,10 @@ class HandlerMakeCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace(string $rootNamespace): string
     {
         return $rootNamespace.'\Http\Handlers\Core';
     }
@@ -105,9 +109,8 @@ class HandlerMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
-        return [
-        ];
+        return [];
     }
 }

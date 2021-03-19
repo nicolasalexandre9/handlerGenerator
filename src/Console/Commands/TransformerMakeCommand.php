@@ -43,10 +43,10 @@ class TransformerMakeCommand extends GeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
-    protected function buildClass($name)
+    protected function buildClass(string $name): string
     {
         $rawName = $this->getNameInput();
         return str_replace(
@@ -65,10 +65,10 @@ class TransformerMakeCommand extends GeneratorCommand
     /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
-    protected function qualifyClass($name)
+    protected function qualifyClass(string $name): string
     {
         $name = ltrim($name, '\\/').'Transformer';
 
@@ -88,7 +88,7 @@ class TransformerMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__.'/stubs/transformer.stub';
     }
@@ -96,10 +96,10 @@ class TransformerMakeCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace(string $rootNamespace): string
     {
         return $rootNamespace.'\Transformers';
     }
@@ -109,10 +109,8 @@ class TransformerMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
-        return [
-
-        ];
+        return [];
     }
 }
