@@ -46,7 +46,7 @@ class TransformerMakeCommand extends GeneratorCommand
      * @param string $name
      * @return string
      */
-    protected function buildClass(string $name): string
+    protected function buildClass($name)
     {
         $rawName = $this->getNameInput();
         return str_replace(
@@ -68,7 +68,7 @@ class TransformerMakeCommand extends GeneratorCommand
      * @param string $name
      * @return string
      */
-    protected function qualifyClass(string $name): string
+    protected function qualifyClass($name)
     {
         $name = ltrim($name, '\\/').'Transformer';
 
@@ -99,7 +99,7 @@ class TransformerMakeCommand extends GeneratorCommand
      * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace(string $rootNamespace): string
+    protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace.'\Transformers';
     }

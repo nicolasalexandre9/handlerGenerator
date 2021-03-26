@@ -46,7 +46,7 @@ class HandlerInterfaceMakeCommand extends GeneratorCommand
      * @param string $name
      * @return string
      */
-    protected function buildClass(string $name): string
+    protected function buildClass($name)
     {
         $stub = parent::buildClass($name);
 
@@ -59,7 +59,7 @@ class HandlerInterfaceMakeCommand extends GeneratorCommand
      * @param string $name
      * @return string
      */
-    protected function qualifyClass(string $name): string
+    protected function qualifyClass($name)
     {
         $name = ltrim($name, '\\/').'HandlerInterface';
 
@@ -92,7 +92,7 @@ class HandlerInterfaceMakeCommand extends GeneratorCommand
      * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace(string $rootNamespace): string
+    protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace.'\Http\Handlers\Interfaces';
     }

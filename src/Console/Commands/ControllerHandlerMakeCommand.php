@@ -46,9 +46,14 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
      * @param string $name
      * @return string
      */
-    protected function buildClass(string $name): string
+    protected function buildClass($name)
     {
         $rawName = $this->getNameInput();
+        $stub = $this->replaceExtends(
+            parent::buildClass($name),
+            $this->option('child') ? $name : null
+        );
+
         return str_replace(
             [
                 'DummyModel',
@@ -62,7 +67,7 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
                 $this->option('type') ? 'abstract ' : '',
                 strtolower($rawName),
             ],
-            parent::buildClass($name)
+            $stub
         );
     }
 
@@ -72,7 +77,7 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
      * @param string $name
      * @return string
      */
-    protected function qualifyClass(string $name): string
+    protected function qualifyClass($name)
     {
         $name = ltrim(Str::plural($name), '\\/') . 'Controller';
 
@@ -93,7 +98,7 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
      * @param string $name
      * @return string
      */
-    protected function getPath(string $name): string
+    protected function getPath($name)
     {
         $name = Str::plural($this->getNameInput()) . 'Controller';
         $abstract = $this->option('type') ? 'Abstract' : '';
@@ -131,10 +136,43 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
      * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace(string $rootNamespace): string
+    protected function getDefaultNamespace($rootNamespace)
     {
         $namespace = $rootNamespace . '\Http\Controllers\Api\\' . strtoupper(env('API_VERSION'));
         return $this->option('child') ? $namespace . '\\' . $this->option('child') : $namespace;
+    }
+
+    /**
+     * Replace the class name for the given stub.
+     *
+     * @param  string  $stub
+     * @param  string  $name
+     * @return string
+     */
+    protected function replaceClass($stub, $name)
+    {
+        $abstract = $this->option('type') ? 'Abstract' : '';
+        $class = $abstract . str_replace($this->getNamespace($name).'\\', '', $name);
+
+        return str_replace(['DummyClass', '{{ class }}', '{{class}}'], $class, $stub);
+    }
+
+    /**
+     * @param $stub
+     * @param string|null $name
+     * @return string
+     */
+    protected function replaceExtends($stub, ?string $name = null): string
+    {
+        $class = 'ApiController';
+        if ($name && $this->option('child')) {
+            $class = 'Abstract' . str_replace($this->getNamespace($name).'\\', '', $name);
+            $use = 'use App\Http\Controllers\Api\\' . strtoupper(env('API_VERSION')) . '\\' . $class . ';';
+            $stub = str_replace('DummyUseExtends', $use, $stub);
+        }
+        $stub = str_replace('DummyUseExtends', '', $stub);
+
+        return str_replace('DummyExtends', $class, $stub);
     }
 
     /**

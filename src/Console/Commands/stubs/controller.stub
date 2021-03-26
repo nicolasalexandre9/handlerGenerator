@@ -4,8 +4,9 @@ namespace DummyNamespace;
 
 use DummyModelHandlerInterface;
 use Illuminate\Http\JsonResponse;
+DummyUseExtends
 
-DummyTypeclass DummyClass extends ApiController
+DummyTypeclass DummyClass extends DummyExtends
 {
     /**
      * @param DummyModelHandlerInterface $dummyModelHandler
