@@ -1,0 +1,46 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Foundation\Http\FormRequest;
+
+/**
+ * @OA\Schema (
+ *  type="object",
+ *  required={"field1", "field2"},
+ *  @OA\Property(property="field1", type="string"),
+ *  @OA\Property(property="field2", type="string"),
+ *  @OA\Property(property="field3", type="string"),
+ * )
+ * Class DummyModelTransformer
+ *
+ * @category DummyCategory
+ * @package  DummyPackage
+ * @author   DummyAuthor
+ * @license  DummyLicence
+ * @link     DummyLink
+ */
+class {{ class }} extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return false;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            //
+        ];
+    }
+}

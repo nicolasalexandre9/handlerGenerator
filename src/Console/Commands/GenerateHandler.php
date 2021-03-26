@@ -82,11 +82,11 @@ class GenerateHandler extends Command
 
         //Model
         $this->call('make:model', [
-            'name' => 'Models\\'.$name,
+            'name' => $name,
         ]);
 
         //Request
-        $this->call('make:request', [
+        $this->call('make:requestHandler', [
             'name' => $name . 'Request',
         ]);
 
@@ -95,8 +95,9 @@ class GenerateHandler extends Command
             'name' => $name,
         ]);
 
-        if (!$this->updatePatternConfig($name))
+        if (!$this->updatePatternConfig($name)) {
             return $this->error('Error, pattern config was not updated');
+        }
 
 
         return $this->info('Handler interface created');

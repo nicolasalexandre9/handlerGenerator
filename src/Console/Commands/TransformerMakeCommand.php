@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputOption;
  * @license  GNU http://www.creatic-agency.fr/license
  * @link     http://www.creatic-agency.fr
  */
-class TransformerMakeCommand extends GeneratorCommand
+class TransformerMakeCommand extends AbstractGeneratorCommand
 {
     /**
      * The console command name.
@@ -41,31 +41,9 @@ class TransformerMakeCommand extends GeneratorCommand
     protected $type = 'Transformer';
 
     /**
-     * Build the class with the given name.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function buildClass($name)
-    {
-        $rawName = $this->getNameInput();
-        return str_replace(
-            [
-                'DummyModel',
-                'dummyModel'
-            ],
-            [
-                $rawName,
-                strtolower($rawName)
-            ],
-            parent::buildClass($name)
-        );
-    }
-
-    /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function qualifyClass($name)
@@ -88,7 +66,7 @@ class TransformerMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__.'/stubs/transformer.stub';
     }
@@ -96,7 +74,7 @@ class TransformerMakeCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
@@ -109,10 +87,8 @@ class TransformerMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
-        return [
-
-        ];
+        return [];
     }
 }

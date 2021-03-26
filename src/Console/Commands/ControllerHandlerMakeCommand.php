@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputOption;
  * @license  GNU http://www.creatic-agency.fr/license
  * @link     http://www.creatic-agency.fr
  */
-class ControllerHandlerMakeCommand extends GeneratorCommand
+class ControllerHandlerMakeCommand extends AbstractGeneratorCommand
 {
     /**
      * The console command name.
@@ -43,38 +43,45 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function buildClass($name)
     {
         $rawName = $this->getNameInput();
+        $stub = $this->replaceExtends(
+            parent::buildClass($name),
+            $this->option('child') ? $name : null
+        );
+
         return str_replace(
             [
-                'DummyModel',
-                'DummyModelInterface',
+                'DummyModelHandlerInterface',
                 'DummyType',
-                'dummyModel'
+                'DummyPathRoute',
+                'DummyUcfirstPluralModel',
+                'DummyPluralModel',
             ],
             [
-                $rawName,
                 $this->getInterfaceName($rawName),
-                $this->option('type') ? 'abstract ' :  '',
-                strtolower($rawName)
+                $this->option('type') ? 'abstract ' : '',
+                $this->getPathRoute(),
+                ucfirst(Str::plural($rawName)),
+                strtolower(Str::plural($rawName))
             ],
-            parent::buildClass($name)
+            $stub
         );
     }
 
     /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function qualifyClass($name)
     {
-        $name = ltrim(Str::plural($name), '\\/').'Controller';
+        $name = ltrim(Str::plural($name), '\\/') . 'Controller';
 
         $rootNamespace = $this->rootNamespace();
 
@@ -84,26 +91,26 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
 
         $name = str_replace('/', '\\', $name);
 
-        return $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name;
+        return $this->getDefaultNamespace(trim($rootNamespace, '\\')) . '\\' . $name;
     }
 
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function getPath($name)
     {
         $name = Str::plural($this->getNameInput()) . 'Controller';
-        $abstract = $this->option('type') ? 'Abstract' :  '';
+        $abstract = $this->option('type') ? 'Abstract' : '';
         $child = $this->option('child') ?: '';
         if (empty($abstract)) {
             $name = '\Http\Controllers\Api\\' . strtoupper(env('API_VERSION')) . '\\' . $child . '\\' . $name;
         } else {
             $name = '\Http\Controllers\Api\\' . strtoupper(env('API_VERSION')) . '\\' . $abstract . $name;
         }
-        return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'.php';
+        return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . '.php';
     }
 
     /**
@@ -111,12 +118,16 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
-        return __DIR__.'/stubs/controller.stub';
+        return $this->option('type') ? __DIR__ . '/stubs/abstractController.stub' : __DIR__ . '/stubs/controller.stub';
     }
 
-    protected function getInterfaceName($name)
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected function getInterfaceName(string $name): string
     {
         return 'App\Http\Handlers\Interfaces\\' . $name . 'HandlerInterface';
     }
@@ -124,13 +135,54 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        $namespace = $rootNamespace.'\Http\Controllers\Api\\' . strtoupper(env('API_VERSION'));
-        return  $this->option('child') ? $namespace . '\\' . $this->option('child') : $namespace;
+        $namespace = $rootNamespace . '\Http\Controllers\Api\\' . strtoupper(env('API_VERSION'));
+        return $this->option('child') ? $namespace . '\\' . $this->option('child') : $namespace;
+    }
+
+    /**
+     * Replace the class name for the given stub.
+     *
+     * @param  string  $stub
+     * @param  string  $name
+     * @return string
+     */
+    protected function replaceClass($stub, $name)
+    {
+        $abstract = $this->option('type') ? 'Abstract' : '';
+        $class = $abstract . str_replace($this->getNamespace($name).'\\', '', $name);
+
+        return str_replace(['DummyClass', '{{ class }}', '{{class}}'], $class, $stub);
+    }
+
+    /**
+     * @param $stub
+     * @param string|null $name
+     * @return string
+     */
+    protected function replaceExtends($stub, ?string $name = null): string
+    {
+        $class = 'ApiController';
+        if ($name && $this->option('child')) {
+            $class = 'Abstract' . str_replace($this->getNamespace($name).'\\', '', $name);
+            $use = 'use App\Http\Controllers\Api\\' . strtoupper(env('API_VERSION')) . '\\' . $class . ';';
+            $stub = str_replace('DummyUseExtends', $use, $stub);
+        }
+        $stub = str_replace('DummyUseExtends', '', $stub);
+
+        return str_replace('DummyExtends', $class, $stub);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPathRoute(): string
+    {
+        return '/' . env('API_PREFIX') . '/' . env('API_VERSION');
     }
 
     /**
@@ -138,7 +190,7 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             ['type', 't', InputOption::VALUE_OPTIONAL, 'create abstract Controller'],

@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputOption;
  * @license  GNU http://www.creatic-agency.fr/license
  * @link     http://www.creatic-agency.fr
  */
-class HandlerInterfaceMakeCommand extends GeneratorCommand
+class HandlerInterfaceMakeCommand extends AbstractGeneratorCommand
 {
     /**
      * The console command name.
@@ -41,22 +41,9 @@ class HandlerInterfaceMakeCommand extends GeneratorCommand
     protected $type = 'HandlerInterface';
 
     /**
-     * Build the class with the given name.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function buildClass($name)
-    {
-        $stub = parent::buildClass($name);
-
-        return $stub;
-    }
-
-    /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function qualifyClass($name)
@@ -80,7 +67,7 @@ class HandlerInterfaceMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__.'/stubs/interface.stub';
     }
@@ -89,7 +76,7 @@ class HandlerInterfaceMakeCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
@@ -102,9 +89,8 @@ class HandlerInterfaceMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
-        return [
-        ];
+        return [];
     }
 }

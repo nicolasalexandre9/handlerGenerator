@@ -2,65 +2,19 @@
 
 namespace DummyNamespace;
 
-use DummyHandlerInterface;
-use Illuminate\Http\JsonResponse;
+use DummyModelHandlerInterface;
+DummyUseExtends
 
-DummyTypeclass DummyClass extends ApiController
+/**
+ * Class DummyModelTransformer
+ *
+ * @category DummyCategory
+ * @package  DummyPackage
+ * @author   DummyAuthor
+ * @license  DummyLicence
+ * @link     DummyLink
+ */
+DummyTypeclass DummyClass extends DummyExtends
 {
-    /**
-     * @param DummyModelHandlerInterface $dummyModelHandler
-     *
-     * @return array
-     */
-    public function index(DummyModelHandlerInterface $dummyModelHandler): array
-    {
-        return $dummyModelHandler->list();
-    }
 
-    /**
-     * @param DummyModelHandlerInterface $dummyModelHandler
-     *
-     * @return array
-     */
-    public function store(DummyModelHandlerInterface $dummyModelHandler): array
-    {
-        return $dummyModelHandler->handle();
-    }
-
-    /**
-     * @param int                        $dummyModel
-     * @param DummyModelHandlerInterface $dummyModelHandler
-     *
-     * @return array
-     */
-    public function show(int $dummyModel, DummyModelHandlerInterface $dummyModelHandler): array
-    {
-        return $dummyModelHandler->get($dummyModel);
-    }
-
-    /**
-     * @param int                        $dummyModel
-     * @param DummyModelHandlerInterface $dummyModelHandler
-     *
-     * @return array
-     */
-    public function update(int $dummyModel, DummyModelHandlerInterface $dummyModelHandler): array
-    {
-        return $dummyModelHandler->handle(['id' => $dummyModel]);
-    }
-
-    /**
-    * @param int                        $dummyModel
-    * @param DummyModelHandlerInterface $dummyModelHandler
-    *
-    * @return array
-    */
-    public function destroy(int $dummyModel, DummyModelHandlerInterface $dummyModelHandler): JsonResponse
-    {
-        return response()->json(
-            [
-                'message' => $dummyModelHandler->destroy($dummyModel)
-            ]
-        );
-    }
 }

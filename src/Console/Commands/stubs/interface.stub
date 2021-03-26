@@ -2,6 +2,15 @@
 
 namespace DummyNamespace;
 
+/**
+ * Class DummyModelTransformer
+ *
+ * @category DummyCategory
+ * @package  DummyPackage
+ * @author   DummyAuthor
+ * @license  DummyLicence
+ * @link     DummyLink
+ */
 interface DummyClass
 {
     //

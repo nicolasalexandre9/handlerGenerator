@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\DummyModel;
 use App\Http\Handlers\Interfaces\DummyInterface;
 
+/**
+ * Class DummyModelTransformer
+ *
+ * @category DummyCategory
+ * @package  DummyPackage
+ * @author   DummyAuthor
+ * @license  DummyLicence
+ * @link     DummyLink
+ */
 class DummyClass extends AbstractHandler implements DummyInterface
 {
     /**

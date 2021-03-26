@@ -8,7 +8,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
-class HandlerMakeCommand extends GeneratorCommand
+class HandlerMakeCommand extends AbstractGeneratorCommand
 {
     /**
      * The console command name.
@@ -34,7 +34,7 @@ class HandlerMakeCommand extends GeneratorCommand
     /**
      * Build the class with the given name.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function buildClass($name)
@@ -42,11 +42,9 @@ class HandlerMakeCommand extends GeneratorCommand
         $rawName = $this->getNameInput();
         return str_replace(
             [
-                'DummyModel',
                 'DummyInterface',
             ],
             [
-                $rawName,
                 $this->getInterfaceName($rawName),
             ],
             parent::buildClass($name)
@@ -56,7 +54,7 @@ class HandlerMakeCommand extends GeneratorCommand
     /**
      * Parse the class name and format according to the root namespace.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function qualifyClass($name)
@@ -79,12 +77,16 @@ class HandlerMakeCommand extends GeneratorCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__.'/stubs/handler.stub';
     }
 
-    protected function getInterfaceName($name)
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected function getInterfaceName(string $name): string
     {
         return $name.'HandlerInterface';
     }
@@ -92,7 +94,7 @@ class HandlerMakeCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
@@ -105,9 +107,8 @@ class HandlerMakeCommand extends GeneratorCommand
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
-        return [
-        ];
+        return [];
     }
 }
