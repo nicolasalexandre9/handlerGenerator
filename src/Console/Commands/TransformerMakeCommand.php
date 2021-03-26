@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputOption;
  * @license  GNU http://www.creatic-agency.fr/license
  * @link     http://www.creatic-agency.fr
  */
-class TransformerMakeCommand extends GeneratorCommand
+class TransformerMakeCommand extends AbstractGeneratorCommand
 {
     /**
      * The console command name.
@@ -39,28 +39,6 @@ class TransformerMakeCommand extends GeneratorCommand
      * @var string
      */
     protected $type = 'Transformer';
-
-    /**
-     * Build the class with the given name.
-     *
-     * @param string $name
-     * @return string
-     */
-    protected function buildClass($name)
-    {
-        $rawName = $this->getNameInput();
-        return str_replace(
-            [
-                'DummyModel',
-                'dummyModel'
-            ],
-            [
-                $rawName,
-                strtolower($rawName)
-            ],
-            parent::buildClass($name)
-        );
-    }
 
     /**
      * Parse the class name and format according to the root namespace.

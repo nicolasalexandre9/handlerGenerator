@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputOption;
  * @license  GNU http://www.creatic-agency.fr/license
  * @link     http://www.creatic-agency.fr
  */
-class ControllerHandlerMakeCommand extends GeneratorCommand
+class ControllerHandlerMakeCommand extends AbstractGeneratorCommand
 {
     /**
      * The console command name.
@@ -56,22 +56,18 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
 
         return str_replace(
             [
-                'DummyModel',
                 'DummyModelHandlerInterface',
                 'DummyType',
-                'dummyModel',
                 'DummyPathRoute',
                 'DummyUcfirstPluralModel',
                 'DummyPluralModel',
             ],
             [
-                $rawName,
                 $this->getInterfaceName($rawName),
                 $this->option('type') ? 'abstract ' : '',
-                strtolower($rawName),
                 $this->getPathRoute(),
                 ucfirst(Str::plural($rawName)),
-                Str::plural($rawName)
+                strtolower(Str::plural($rawName))
             ],
             $stub
         );

@@ -5,6 +5,15 @@ namespace DummyNamespace;
 use DummyModelHandlerInterface;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Class DummyModelTransformer
+ *
+ * @category DummyCategory
+ * @package  DummyPackage
+ * @author   DummyAuthor
+ * @license  DummyLicence
+ * @link     DummyLink
+ */
 DummyTypeclass DummyClass extends DummyExtends
 {
     /**
@@ -140,7 +149,7 @@ DummyTypeclass DummyClass extends DummyExtends
      * @param int                        $dummyModel
      * @param DummyModelHandlerInterface $dummyModelHandler
      *
-     * @return array
+     * @return JsonResponse
      */
     public function destroy(int $dummyModel, DummyModelHandlerInterface $dummyModelHandler): JsonResponse
     {

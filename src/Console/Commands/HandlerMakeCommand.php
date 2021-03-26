@@ -8,7 +8,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
-class HandlerMakeCommand extends GeneratorCommand
+class HandlerMakeCommand extends AbstractGeneratorCommand
 {
     /**
      * The console command name.
@@ -42,11 +42,9 @@ class HandlerMakeCommand extends GeneratorCommand
         $rawName = $this->getNameInput();
         return str_replace(
             [
-                'DummyModel',
                 'DummyInterface',
             ],
             [
-                $rawName,
                 $this->getInterfaceName($rawName),
             ],
             parent::buildClass($name)

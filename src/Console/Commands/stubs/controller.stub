@@ -3,9 +3,17 @@
 namespace DummyNamespace;
 
 use DummyModelHandlerInterface;
-use Illuminate\Http\JsonResponse;
 DummyUseExtends
 
+/**
+ * Class DummyModelTransformer
+ *
+ * @category DummyCategory
+ * @package  DummyPackage
+ * @author   DummyAuthor
+ * @license  DummyLicence
+ * @link     DummyLink
+ */
 DummyTypeclass DummyClass extends DummyExtends
 {
 

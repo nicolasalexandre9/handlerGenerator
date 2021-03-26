@@ -5,18 +5,25 @@ namespace DummyNamespace;
 use League\Fractal\TransformerAbstract;
 use App\Models\DummyModel;
 
+/**
+ * @OA\Schema (
+ *  type="object",
+ *  @OA\Property(property="id", type="integer"),
+ *  example={
+        "id": 1,
+ *  }
+ * )
+ *
+ * Class DummyModelTransformer
+ *
+ * @category DummyCategory
+ * @package  DummyPackage
+ * @author   DummyAuthor
+ * @license  DummyLicence
+ * @link     DummyLink
+ */
 class DummyClass extends TransformerAbstract
 {
-
-    /**
-     * @OA\Schema (
-     *  type="object",
-     *  @OA\Property(property="id", type="integer"),
-     *  example={
-            "id": 1,
-     *  }
-     * )
-    */
     /**
      * @param DummyModel $dummyModel
      *
@@ -24,6 +31,6 @@ class DummyClass extends TransformerAbstract
      */
     public function transform(DummyModel $dummyModel): array
     {
-        return [];
+        return $dummyModel->toArray();
     }
 }

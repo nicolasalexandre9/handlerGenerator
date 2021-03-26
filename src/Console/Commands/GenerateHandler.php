@@ -86,7 +86,7 @@ class GenerateHandler extends Command
         ]);
 
         //Request
-        $this->call('make:request', [
+        $this->call('make:requestHandler', [
             'name' => $name . 'Request',
         ]);
 
