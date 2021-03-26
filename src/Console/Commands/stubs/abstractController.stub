@@ -1,0 +1,153 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummyModelHandlerInterface;
+use Illuminate\Http\JsonResponse;
+
+DummyTypeclass DummyClass extends DummyExtends
+{
+    /**
+     * @OA\Get(
+     *  path="DummyPathRoute/DummyPluralModel",
+     *  description="",
+     *  tags={"DummyUcfirstPluralModel"},
+     *  @OA\Response(
+     *     response=200,
+     *     description="",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         ref="#/components/schemas/DummyModelTransformer"
+     *     )
+     *  )
+     * )
+     */
+    /**
+     * @param DummyModelHandlerInterface $dummyModelHandler
+     *
+     * @return array
+     */
+    public function index(DummyModelHandlerInterface $dummyModelHandler): array
+    {
+        return $dummyModelHandler->list();
+    }
+
+
+    /**
+     * @OA\Post(
+     *  path="DummyPathRoute/DummyPluralModel",
+     *  description="",
+     *  tags={"DummyUcfirstPluralModel"},
+     *  @OA\RequestBody(
+     *      @OA\JsonContent(
+     *         type="object",
+     *         ref="#/components/schemas/DummyModelRequest"
+     *     )
+     *  ),
+     *  @OA\Response(
+     *     response=200,
+     *     description="",
+     *     @OA\JsonContent(
+     *          type="object",
+     *          ref="#/components/schemas/DummyModelTransformer"
+     *     )
+     *  )
+     * )
+     */
+    /**
+     * @param DummyModelHandlerInterface $dummyModelHandler
+     *
+     * @return array
+     */
+    public function store(DummyModelHandlerInterface $dummyModelHandler): array
+    {
+        return $dummyModelHandler->handle();
+    }
+
+
+    /**
+     * @OA\Get(
+     *  path="DummyPathRoute/DummyPluralModel/{dummyModel}",
+     *  description="",
+     *  tags={"DummyUcfirstPluralModel"},
+     *  @OA\Response(
+     *     response=200,
+     *     description="",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         ref="#/components/schemas/DummyModelTransformer"
+     *     )
+     *  )
+     * )
+     */
+    /**
+     * @param int                        $dummyModel
+     * @param DummyModelHandlerInterface $dummyModelHandler
+     *
+     * @return array
+     */
+    public function show(int $dummyModel, DummyModelHandlerInterface $dummyModelHandler): array
+    {
+        return $dummyModelHandler->get($dummyModel);
+    }
+
+
+    /**
+     * @OA\Put(
+     *  path="DummyPathRoute/DummyPluralModel/{dummyModel}",
+     *  description="",
+     *  tags={"DummyUcfirstPluralModel"},
+     *  @OA\RequestBody(
+     *      @OA\JsonContent(
+     *         type="object",
+     *         ref="#/components/schemas/DummyModelRequest"
+     *     )
+     *  ),
+     *  @OA\Response(
+     *     response=200,
+     *     description="",
+     *     @OA\JsonContent(
+     *          type="object",
+     *          ref="#/components/schemas/DummyModelTransformer"
+     *     )
+     *  )
+     * )
+     */
+    /**
+     * @param int                        $dummyModel
+     * @param DummyModelHandlerInterface $dummyModelHandler
+     *
+     * @return array
+     */
+    public function update(int $dummyModel, DummyModelHandlerInterface $dummyModelHandler): array
+    {
+        return $dummyModelHandler->handle(['id' => $dummyModel]);
+    }
+
+
+    /**
+     * @OA\Delete(
+     *  path="DummyPathRoute/DummyPluralModel/{dummyModel}",
+     *  description="",
+     *  tags={"DummyUcfirstPluralModel"},
+     *  @OA\Response(
+     *     response=200,
+     *     description="",
+     *  )
+     * )
+     */
+    /**
+     * @param int                        $dummyModel
+     * @param DummyModelHandlerInterface $dummyModelHandler
+     *
+     * @return array
+     */
+    public function destroy(int $dummyModel, DummyModelHandlerInterface $dummyModelHandler): JsonResponse
+    {
+        return response()->json(
+            [
+                'message' => $dummyModelHandler->destroy($dummyModel)
+            ]
+        );
+    }
+}

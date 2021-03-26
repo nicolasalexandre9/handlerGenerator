@@ -60,12 +60,18 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
                 'DummyModelHandlerInterface',
                 'DummyType',
                 'dummyModel',
+                'DummyPathRoute',
+                'DummyUcfirstPluralModel',
+                'DummyPluralModel',
             ],
             [
                 $rawName,
                 $this->getInterfaceName($rawName),
                 $this->option('type') ? 'abstract ' : '',
                 strtolower($rawName),
+                $this->getPathRoute(),
+                ucfirst(Str::plural($rawName)),
+                Str::plural($rawName)
             ],
             $stub
         );
@@ -118,7 +124,7 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
      */
     protected function getStub(): string
     {
-        return __DIR__ . '/stubs/controller.stub';
+        return $this->option('type') ? __DIR__ . '/stubs/abstractController.stub' : __DIR__ . '/stubs/controller.stub';
     }
 
     /**
@@ -173,6 +179,14 @@ class ControllerHandlerMakeCommand extends GeneratorCommand
         $stub = str_replace('DummyUseExtends', '', $stub);
 
         return str_replace('DummyExtends', $class, $stub);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPathRoute(): string
+    {
+        return '/' . env('API_PREFIX') . '/' . env('API_VERSION');
     }
 
     /**
