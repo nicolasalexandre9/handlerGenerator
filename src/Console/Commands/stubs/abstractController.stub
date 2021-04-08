@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use DummyModelHandlerInterface;
+use DummyHandlerInterface;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -76,7 +76,7 @@ DummyTypeclass DummyClass extends DummyExtends
 
     /**
      * @OA\Get(
-     *  path="DummyPathRoute/DummyPluralModel/{dummyModel}",
+     *  path="DummyPathRoute/DummyPluralModel/{dummyModelId}",
      *  description="",
      *  tags={"DummyUcfirstPluralModel"},
      *  @OA\Response(
@@ -103,7 +103,7 @@ DummyTypeclass DummyClass extends DummyExtends
 
     /**
      * @OA\Put(
-     *  path="DummyPathRoute/DummyPluralModel/{dummyModel}",
+     *  path="DummyPathRoute/DummyPluralModel/{dummyModelId}",
      *  description="",
      *  tags={"DummyUcfirstPluralModel"},
      *  @OA\RequestBody(
@@ -136,7 +136,7 @@ DummyTypeclass DummyClass extends DummyExtends
 
     /**
      * @OA\Delete(
-     *  path="DummyPathRoute/DummyPluralModel/{dummyModel}",
+     *  path="DummyPathRoute/DummyPluralModel/{dummyModelId}",
      *  description="",
      *  tags={"DummyUcfirstPluralModel"},
      *  @OA\Response(

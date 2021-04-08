@@ -56,7 +56,7 @@ class ControllerHandlerMakeCommand extends AbstractGeneratorCommand
 
         return str_replace(
             [
-                'DummyModelHandlerInterface',
+                'DummyHandlerInterface',
                 'DummyType',
                 'DummyPathRoute',
                 'DummyUcfirstPluralModel',
