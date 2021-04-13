@@ -12,7 +12,7 @@ use Illuminate\Foundation\Http\FormRequest;
  *  @OA\Property(property="field2", type="string"),
  *  @OA\Property(property="field3", type="string"),
  * )
- * Class DummyModelTransformer
+ * Class {{ class }}
  *
  * @category DummyCategory
  * @package  DummyPackage

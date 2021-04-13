@@ -4,9 +4,12 @@ namespace DummyNamespace;
 
 use DummyHandlerInterface;
 use Illuminate\Http\JsonResponse;
+use App\Models\DummyModel;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 /**
- * Class DummyModelTransformer
+ * Class DummyClass
  *
  * @category DummyCategory
  * @package  DummyPackage
@@ -35,9 +38,13 @@ DummyTypeclass DummyClass extends DummyExtends
      * @param DummyModelHandlerInterface $dummyModelHandler
      *
      * @return array
+     * @throws BindingResolutionException
+     * @throws AuthorizationException
      */
     public function index(DummyModelHandlerInterface $dummyModelHandler): array
     {
+        $this->authorize('viewAny', DummyModel::class);
+
         return $dummyModelHandler->list();
     }
 
@@ -67,9 +74,12 @@ DummyTypeclass DummyClass extends DummyExtends
      * @param DummyModelHandlerInterface $dummyModelHandler
      *
      * @return array
+     * @throws AuthorizationException
      */
     public function store(DummyModelHandlerInterface $dummyModelHandler): array
     {
+        $this->authorize('create', DummyModel::class);
+
         return $dummyModelHandler->handle();
     }
 
@@ -94,9 +104,13 @@ DummyTypeclass DummyClass extends DummyExtends
      * @param DummyModelHandlerInterface $dummyModelHandler
      *
      * @return array
+     * @throws BindingResolutionException
+     * @throws AuthorizationException
      */
     public function show(int $dummyModel, DummyModelHandlerInterface $dummyModelHandler): array
     {
+        $this->authorize('view', $this->findDummyModel($dummyModel));
+
         return $dummyModelHandler->get($dummyModel);
     }
 
@@ -127,9 +141,12 @@ DummyTypeclass DummyClass extends DummyExtends
      * @param DummyModelHandlerInterface $dummyModelHandler
      *
      * @return array
+     * @throws AuthorizationException
      */
     public function update(int $dummyModel, DummyModelHandlerInterface $dummyModelHandler): array
     {
+        $this->authorize('update', $this->findDummyModel($dummyModel));
+
         return $dummyModelHandler->handle(['id' => $dummyModel]);
     }
 
@@ -150,13 +167,26 @@ DummyTypeclass DummyClass extends DummyExtends
      * @param DummyModelHandlerInterface $dummyModelHandler
      *
      * @return JsonResponse
+     * @throws BindingResolutionException
+     * @throws AuthorizationException
      */
     public function destroy(int $dummyModel, DummyModelHandlerInterface $dummyModelHandler): JsonResponse
     {
+        $this->authorize('delete', $this->findDummyModel($dummyModel));
+
         return response()->json(
             [
                 'message' => $dummyModelHandler->destroy($dummyModel)
             ]
         );
+    }
+
+    /**
+     * @param int $id
+     * @return Leave
+     */
+    public function findDummyModel(int $id): DummyModel
+    {
+        return DummyModel::find($id);
     }
 }
