@@ -183,7 +183,7 @@ DummyTypeclass DummyClass extends DummyExtends
 
     /**
      * @param int $id
-     * @return Leave
+     * @return DummyModel
      */
     public function findDummyModel(int $id): DummyModel
     {
