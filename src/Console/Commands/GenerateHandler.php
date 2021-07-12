@@ -83,6 +83,7 @@ class GenerateHandler extends Command
         //Model
         $this->call('make:model', [
             'name' => $name,
+            '-m'   => true
         ]);
 
         //Request
@@ -93,6 +94,12 @@ class GenerateHandler extends Command
         //Transformer
         $this->call('make:transformer', [
             'name' => $name,
+        ]);
+
+        //Policy
+        $this->call('make:policy', [
+            'name' => $name . 'Policy',
+            '--model' => $name,
         ]);
 
         if (!$this->updatePatternConfig($name)) {

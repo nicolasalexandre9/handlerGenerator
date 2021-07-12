@@ -6,7 +6,7 @@ use DummyModelHandlerInterface;
 DummyUseExtends
 
 /**
- * Class DummyModelTransformer
+ * Class DummyClass
  *
  * @category DummyCategory
  * @package  DummyPackage
